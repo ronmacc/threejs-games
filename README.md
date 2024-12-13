@@ -7,6 +7,12 @@
   WIP
 </div>
 <br />
+
+<!-- GIF Section -->
+<div align="center">
+  <img src="./data/gametest.gif" alt="game-GIF" width="500">
+</div>
+
 <div align="center">
   <h3 align="center">Three.js Game Studies</h3>
   <p align="center" style="font-weight: bold;">
@@ -16,8 +22,13 @@
 
 <!-- GIF Section -->
 <div align="center">
-  <img src="./assets/images/game-preview.gif" alt="Project GIF" width="500">
+  <img src="./data/openclose.gif" alt="game-GIF" width="500">
 </div>
+<!-- GIF Section -->
+<div align="center">
+  <img src="./data/movedrag.gif" alt="game-GIF" width="500">
+</div>
+
 
 ---
 
