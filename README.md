@@ -18,10 +18,6 @@
   </p>
 </div>
 
-
-
----
-
 ## About The Project
 
 This repository explores building interactive 3D web-based tools and games. It combines:
