@@ -52,22 +52,6 @@ My focus is on studying camera-based interactive movements and integrating gestu
    - If the tip (12) is lower than the bottom (9) in the screen's X,Y coordinates, the system detects a change.
 4. To quit the application, press **Q**.
 
----
-
-## Folder Cleanup
-
-### Current Structure
-- `data`: Contains GIFs and images for visual references.
-- `cubeGame.html`: The main file for the cube game.
-- `handsLandmarksClick.py`: Python file for hand tracking game.
-- `README.md`: Documentation.
-
-### Suggested Cleanup
-1. Create a `games` folder to store `cubeGame.html` and `handsLandmarksClick.py`.
-2. Move all GIFs and images into the `data` folder.
-3. Ensure all filenames are descriptive and consistent.
-
-
 <!-- GIF Section -->
 <div align="center">
   <img src="./data/openclose.gif" alt="game-GIF" width="500">
