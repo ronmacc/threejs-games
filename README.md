@@ -1,4 +1,3 @@
-# Three.js Game Studies
 
 <a id="readme-top"></a>
 
@@ -11,9 +10,9 @@
   <h3 align="center">Three.js Game Studies</h3>
   <p align="center" style="font-weight: bold;">
     Exploring Web-Based Interactive 3D Experiences with Three.js, OpenCV, and Mediapipe<br>
-    <a href="mailto:andres.roncal@students.iaac.net" target="_blank">Report Bug</a>
+<!--     <a href="mailto:andres.roncal@students.iaac.net" target="_blank">Report Bug</a>
     ·
-    <a href="mailto:andres.roncal@students.iaac.net" target="_blank">Request Feature</a>
+    <a href="mailto:andres.roncal@students.iaac.net" target="_blank">Request Feature</a> -->
   </p>
 </div>
 
