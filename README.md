@@ -44,7 +44,7 @@ My focus is on studying camera-based interactive movements and integrating gestu
    - **Space**: Jump (double jump is enabled)
 4. To restart the game if you lose, press **F5**.
 
-### Hand Tracking Game
+### Hand Tracking Script
 1. Run the `handsLandmarksClick.py` file in your terminal.
 2. Your camera will open up. Place your hand in view of the camera.
 3. The system will recognize and track your hand movements:
