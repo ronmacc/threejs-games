@@ -162,7 +162,7 @@ function animate(time) {
       width: 1,
       height: 1,
       depth: 1,
-      position: { x: (Math.random() - 0.5) * 5, y: 0, z: -20 },
+      position: { x: (Math.random() - 0.5) * 5, y: (Math.random()), z: -20 },
       velocity: { x: 0, y: 0, z: 0.0025 },
       zAcceleration: true,
       color: '#00ff00',
