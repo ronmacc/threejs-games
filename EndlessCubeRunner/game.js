@@ -1,5 +1,12 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { setupController } from './Controller.js';
+
+// Game state
+let isGameRunning = true;
+
+// Define keys object
+const keys = { a: false, d: false, w: false, s: false };
 
 // Scene setup
 const scene = new THREE.Scene();
@@ -22,6 +29,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// Restore OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
 
 // Collision Box Class
@@ -117,24 +125,32 @@ const enemies = [];
 let frames = 0;
 let spawnRate = 90; // Slower spawn rate
 
-// Game state
-let isGameRunning = true;
+// Set up input handlers
+setupController(keys, isGameRunning, player);
 
-// Input handlers
-const keys = { a: false, d: false, w: false, s: false };
-window.addEventListener('keydown', (e) => {
-    if (!isGameRunning) return;
-    if (e.code === 'KeyA') keys.a = true;
-    if (e.code === 'KeyD') keys.d = true;
-    if (e.code === 'KeyW') keys.w = true;
-    if (e.code === 'KeyS') keys.s = true;
-    if (e.code === 'Space') player.velocity.y = 0.2; // Jump velocity
-});
-window.addEventListener('keyup', (e) => {
-    if (e.code === 'KeyA') keys.a = false;
-    if (e.code === 'KeyD') keys.d = false;
-    if (e.code === 'KeyW') keys.w = false;
-    if (e.code === 'KeyS') keys.s = false;
+// Button logic
+document.getElementById('play-again-btn').addEventListener('click', () => {
+    console.log('Restarting game...');
+
+    // Reset game state
+    isGameRunning = true;
+    document.getElementById('play-again-btn').style.display = 'none';
+
+    // Clear existing enemies
+    enemies.forEach((enemy) => scene.remove(enemy));
+    enemies.length = 0;
+
+    // Reset player position and velocity
+    player.velocity = { x: 0, y: 0, z: 0 };
+    player.position.set(0, 2, 2);
+    player.gravity = 0;
+
+    setTimeout(() => {
+        player.gravity = -0.01;
+    }, 100);
+
+    frames = 0;
+    animate(0);
 });
 
 // Animation loop
@@ -164,14 +180,13 @@ function animate(time) {
         }
     });
 
-    // Spawn new enemies
     if (frames++ % spawnRate === 0) {
         const enemy = new Box({
             width: 1,
             height: 1,
             depth: 1,
             position: { x: (Math.random() - 0.5) * 5, y: 0, z: -20 },
-            velocity: { x: 0, y: 0, z: 0.0025 }, // Slower enemy speed
+            velocity: { x: 0, y: 0, z: 0.0025 },
             zAcceleration: true,
             color: '#00ff00'
         });
@@ -180,51 +195,11 @@ function animate(time) {
         enemies.push(enemy);
     }
 
+    controls.update(); // Ensure OrbitControls are updated
+
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
 
-// Restart game
-document.getElementById('play-again-btn').addEventListener('click', () => {
-    console.log('Restarting game...');
-
-    // Reset game state
-    isGameRunning = true;
-    document.getElementById('play-again-btn').style.display = 'none';
-
-    // Remove existing enemies
-    enemies.forEach((enemy) => scene.remove(enemy));
-    enemies.length = 0;
-    console.log('Enemies cleared');
-
-    // Reset player position and velocity
-    player.velocity = { x: 0, y: 0, z: 0 }; // Fully reset velocity
-    player.position.set(0, 2, 2); // Move player closer to the screen
-    player.gravity = 0; // Temporarily disable gravity
-    console.log('Player position reset:', player.position);
-
-    // Re-enable gravity after reset
-    setTimeout(() => {
-        player.gravity = -0.01; // Restore gravity after a short delay
-        console.log('Gravity re-enabled for player.');
-    }, 100); // 100ms delay to avoid immediate falling
-
-    // Remove and re-add player to ensure it's rendered correctly
-    if (scene.children.includes(player)) {
-        console.log('Removing and re-adding player for safety...');
-        scene.remove(player);
-    }
-    scene.add(player);
-
-    // Confirm player reset
-    console.log('Player added back to scene:', scene.children.includes(player));
-
-    // Reset frame counter
-    frames = 0;
-
-    // Restart animation loop
-    console.log('Animation restarted');
-    animate(0);
-});
-
+// Start animation loop
 animate(0);
