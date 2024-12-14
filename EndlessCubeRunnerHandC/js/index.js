@@ -1,8 +1,8 @@
-
 import * as THREE from "three";
 
 import { SceneManager } from './ScenesManager.js';
 import { setupController } from './Controller.js';
+import { BaseBox } from './BaseBox.js'
 
 // Initialize SceneManager
 const sceneManager = new SceneManager();
@@ -21,52 +21,49 @@ function triggerGameOver(message) {
   document.getElementById('play-again-btn').style.display = 'block';
 }
 
-// Collision Box Class
-class Box extends THREE.Mesh {
-  constructor({ width, height, depth, color, velocity = { x: 0, y: 0, z: 0 }, position = { x: 0, y: 0, z: 0 }, zAcceleration = false, isPlayer = false }) {
-    super(
-      new THREE.BoxGeometry(width, height, depth),
-      new THREE.MeshPhysicalMaterial({
-        color,
-        roughness: 0.7,
-        metalness: 0,
-        clearcoat: 0.3,
-        clearcoatRoughness: 0.5,
-      })
-    );
-
-    this.width = width;
-    this.height = height;
-    this.depth = depth;
-
-    this.position.set(position.x, position.y, position.z);
-    this.velocity = velocity;
-    this.gravity = -0.01;
-    this.zAcceleration = zAcceleration;
-    this.isPlayer = isPlayer;
+// Player Box class
+class PlayerBox extends BaseBox {
+  constructor(params) {
+    super(params);
+    this.isPlayer = true;
   }
 
   update(ground, deltaTime) {
     if (!isGameRunning) return;
 
-    this.position.x += this.velocity.x * deltaTime;
-    this.position.z += this.velocity.z * deltaTime;
-
-    if (this.zAcceleration) this.velocity.z += 0.001 * deltaTime;
-
-    this.velocity.y += this.gravity * deltaTime;
-    this.position.y += this.velocity.y * deltaTime;
+    // Call BaseBox update for movement
+    super.update(deltaTime);
 
     // Collision with ground
     if (boxCollision({ box1: this, box2: ground })) {
-      this.velocity.y *= -0.8;
+      this.velocity.y *= -0.8; // Bounce effect
       this.position.y = ground.position.y + ground.height / 2 + this.height / 2;
     }
 
-    // Check if this is the player and if they fall below the ground
+    // Check if player falls below ground
     const fallingThreshold = -5;
-    if (this.isPlayer && this.position.y < fallingThreshold) {
+    if (this.position.y < fallingThreshold) {
       triggerGameOver('Player fell below ground.');
+    }
+  }
+}
+
+// Enemy Box class
+class EnemyBox extends BaseBox {
+  constructor(params) {
+    super(params);
+  }
+
+  update(ground, deltaTime) {
+    if (!isGameRunning) return;
+
+    // Call BaseBox update for movement
+    super.update(deltaTime);
+
+    // Ensure enemies stay above the ground
+    if (this.position.y - this.height / 2 < ground.position.y + ground.height / 2) {
+      this.position.y = ground.position.y + ground.height / 2 + this.height / 2;
+      this.velocity.y = 0;
     }
   }
 }
@@ -81,7 +78,7 @@ function boxCollision({ box1, box2 }) {
 }
 
 // Player setup
-const player = new Box({
+const player = new PlayerBox({
   width: 1,
   height: 1,
   depth: 1,
@@ -93,7 +90,7 @@ player.castShadow = true;
 scene.add(player);
 
 // Ground setup
-const ground = new Box({
+const ground = new BaseBox({
   width: 5,
   height: 0.5,
   depth: 50,
@@ -107,6 +104,7 @@ scene.add(ground);
 const enemies = [];
 let frames = 0;
 let spawnRate = 90;
+let spawnDelay = 30; // Number of frames to delay the first enemy spawn after restart
 
 // Set up input handlers
 setupController(keys, isGameRunning, player);
@@ -131,6 +129,7 @@ document.getElementById('play-again-btn').addEventListener('click', () => {
   }, 100);
 
   frames = 0;
+  spawnDelay = 30; // Reset the spawn delay on restart
   animate(0);
 });
 
@@ -157,12 +156,12 @@ function animate(time) {
     }
   });
 
-  if (frames++ % spawnRate === 0) {
-    const enemy = new Box({
+  if (frames > spawnDelay && frames % spawnRate === 0) {
+    const enemy = new EnemyBox({
       width: 1,
       height: 1,
       depth: 1,
-      position: { x: (Math.random() - 0.5) * 5, y: (Math.random()), z: -20 },
+      position: { x: (Math.random() - 0.5) * 5, y: ground.position.y + ground.height / 2 + 1, z: -20 },
       velocity: { x: 0, y: 0, z: 0.0025 },
       zAcceleration: true,
       color: '#00ff00',
@@ -172,6 +171,7 @@ function animate(time) {
     enemies.push(enemy);
   }
 
+  frames++;
   sceneManager.render();
   requestAnimationFrame(animate);
 }
