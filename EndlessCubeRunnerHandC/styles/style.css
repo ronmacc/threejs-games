@@ -1,10 +1,24 @@
 
-body {
+html, body {
+    overflow: hidden;
+    width: calc(100%);
+    height: calc(100%);
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  }
+
+#inputVideo {
+    position: fixed;
+    left: -13px;
+    top: 0px;
+    width: 310px;
+    height: 160px;
+    transform: scaleX(-1);
+
+    @media (max-width: 1250px) {
+        width: 110px;
+        height: 210px;
+        left: 0px;
+    }
 }
 
 canvas {

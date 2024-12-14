@@ -11,6 +11,25 @@ export class App {
         const sceneManager = new SceneManager();
         const { scene, camera, renderer } = sceneManager;
 
+        // if (this.hasGetUserMedia()) {
+        //     const enableWebcamButton = document.getElementById("play-again-btn");
+        //     enableWebcamButton.addEventListener("click", (e) => {
+        //       if (this.hasCamera) return;
+        //       e.preventDefault();
+        //       this.hasCamera = true;
+      
+        //       const videoElement = document.getElementById("inputVideo");
+        //       this.mediaPiepeHands = new MediaPipeHands(videoElement, (landmarks) =>
+        //         this.onMediaPipeHandsResults(landmarks)
+        //       );
+        //       this.mediaPiepeHands.start();
+        //       enableWebcamButton.remove();
+        //     });
+        //   } else {
+        //     console.warn("getUserMedia() is not supported by your browser");
+        //   }
+
+
         // Game state
         let isGameRunning = true;
 
@@ -187,8 +206,13 @@ export class App {
         // Start Animation Loop
         animate(0);
     }
+    hasGetUserMedia() {
+        return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+      }
 }
 
-document.addEventListener("DOMContentLoaded", () => new App());
+document.addEventListener("DOMContentLoaded", () => {
+    new App();
+});
 
 
