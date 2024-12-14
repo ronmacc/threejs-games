@@ -1,0 +1,28 @@
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+canvas {
+    display: block;
+}
+
+#play-again-btn {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+    color: #fff; /* White text */
+    font-size: 32px; /* Large text */
+    border: none; /* Remove borders */
+    cursor: pointer; /* Make the cursor a pointer */
+    text-align: center; /* Center text inside the button */
+    display: none; /* Hidden by default */
+}
