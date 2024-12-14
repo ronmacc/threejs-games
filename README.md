@@ -114,12 +114,3 @@ This game (WIP) integrates **OpenCV**, **Mediapipe**, and **Three.js** for gestu
   <img src="./data/movedrag.gif" alt="gesture-GIF" width="500">
 </div>
 
----
-
-## How to Contribute
-
-Feel free to clone this repository and suggest improvements. Here’s how:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/THREEJS-GAMES.git
