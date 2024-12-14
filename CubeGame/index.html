@@ -1,21 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cube Game</title>
-  <link rel="stylesheet" href="./style/style.css">
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.150.1/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
-      }
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Game</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #play-again-btn {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #play-again-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+    <script
+        async
+        src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"
+    ></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.150.1/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.150.1/examples/jsm/"
+            }
+        }
+    </script>
 </head>
 <body>
-    <h2>lalalal</h2>
-  <!-- <script type="module" src="./js/index.js"></script> -->
+    <button id="play-again-btn">Play Again</button>
+    <script type="module" src="./game.js"></script>
 </body>
 </html>
