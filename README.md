@@ -77,12 +77,13 @@ This game (WIP) integrates **OpenCV**, **Mediapipe**, and **Three.js** for gestu
   - Jump: Close your hand to trigger a jump.
 
 #### How to Test:
+1. wip.
 
-1. Open the **EndlessCubeRunnerHandC** folder.
+<!-- 1. Open the **EndlessCubeRunnerHandC** folder.
 2. Right-click on `index.html` and select **Open with Live Server** (if using Visual Studio Code) or serve it through your preferred local web server.
 3. Run the `handsLandmarksClick.py` script in your terminal:
    - Ensure your camera is enabled and permissions are granted.
-   - Keep your hand in the view of the camera to interact with the game.
+   - Keep your hand in the view of the camera to interact with the game. -->
 
 ---
 
@@ -91,14 +92,6 @@ This game (WIP) integrates **OpenCV**, **Mediapipe**, and **Three.js** for gestu
 - **Three.js**: 3D rendering and animations.
 - **OpenCV**: Computer vision and hand detection.
 - **Mediapipe**: Real-time gesture recognition.
-
----
-
-## Future Goals
-
-- Expand **Endless Cube Runner** with more dynamic obstacles and levels.
-- Complete the **HandC** game by integrating gesture-based movement and actions fully.
-- Add support for mobile devices with touchscreen gestures.
 
 ---
 
