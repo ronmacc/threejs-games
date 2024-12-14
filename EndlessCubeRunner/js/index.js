@@ -32,9 +32,25 @@ document.body.appendChild(renderer.domElement);
 // Restore OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
 
+// Trigger Game Over
+function triggerGameOver(message) {
+    console.log(message);
+    isGameRunning = false;
+    document.getElementById('play-again-btn').style.display = 'block';
+}
+
 // Collision Box Class
 class Box extends THREE.Mesh {
-    constructor({ width, height, depth, color, velocity = { x: 0, y: 0, z: 0 }, position = { x: 0, y: 0, z: 0 }, zAcceleration = false }) {
+    constructor({ 
+        width, 
+        height, 
+        depth, 
+        color, 
+        velocity = { x: 0, y: 0, z: 0 }, 
+        position = { x: 0, y: 0, z: 0 }, 
+        zAcceleration = false, 
+        isPlayer = false // New property to identify the player
+    }) {
         super(
             new THREE.BoxGeometry(width, height, depth),
             new THREE.MeshPhysicalMaterial({
@@ -42,7 +58,7 @@ class Box extends THREE.Mesh {
                 roughness: 0.7,
                 metalness: 0,
                 clearcoat: 0.3,
-                clearcoatRoughness: 0.5
+                clearcoatRoughness: 0.5,
             })
         );
 
@@ -54,6 +70,7 @@ class Box extends THREE.Mesh {
         this.velocity = velocity;
         this.gravity = -0.01; // Slower gravity for smoother jumps
         this.zAcceleration = zAcceleration;
+        this.isPlayer = isPlayer; // Assign the isPlayer property
     }
 
     update(ground, deltaTime) {
@@ -71,6 +88,12 @@ class Box extends THREE.Mesh {
         if (boxCollision({ box1: this, box2: ground })) {
             this.velocity.y *= -0.8; // Reverse direction (bounce)
             this.position.y = ground.position.y + ground.height / 2 + this.height / 2;
+        }
+
+        // Check if this is the player and if they fall below the ground
+        const fallingThreshold = -5; // Adjust threshold as needed
+        if (this.isPlayer && this.position.y < fallingThreshold) {
+            triggerGameOver('Player fell below ground.');
         }
     }
 }
@@ -95,7 +118,8 @@ const player = new Box({
     height: 1,
     depth: 1,
     color: '#ff0000',
-    velocity: { x: 0, y: -0.05, z: 0 }
+    velocity: { x: 0, y: -0.05, z: 0 },
+    isPlayer: true, // Indicate that this is the player
 });
 player.castShadow = true;
 scene.add(player);
@@ -174,9 +198,7 @@ function animate(time) {
 
         // Check collision with player
         if (boxCollision({ box1: player, box2: enemy })) {
-            console.log('Collision detected! Game Over.');
-            isGameRunning = false;
-            document.getElementById('play-again-btn').style.display = 'block';
+            triggerGameOver('Collision detected! Game Over.');
         }
     });
 
