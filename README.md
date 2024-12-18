@@ -63,7 +63,7 @@ This is a simple 3D runner game built with **Three.js**. The goal is to avoid en
    - **Space**: Jump
 4. If you lose, click **Restart Game** or refresh the browser to play again.
 
----
+
 <!-- GIF Section -->
 <div align="center">
   <img src="./data/openclose.gif" alt="gesture-GIF" width="500">
@@ -71,6 +71,9 @@ This is a simple 3D runner game built with **Three.js**. The goal is to avoid en
 <div align="center">
   <img src="./data/movedrag.gif" alt="gesture-GIF" width="500">
 </div>
+
+---
+
 ### 2. **Hand Tracking Interaction (HandC)**
 
 This game (WIP) integrates **OpenCV**, **Mediapipe**, and **Three.js** for gesture-based interactions using your computer's camera. You control the player by moving your hand left or right and jumping by closing your hand.
